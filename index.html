@@ -4,10 +4,48 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>WKP5</title>
+		<style>
+			article {
+				border: 1px solid;
+				max-width: 500px;
+				padding: 1rem;
+				margin: 1rem;
+				background-color: grey;
+				color: whitesmoke;
+			}
+
+			img {
+				width: 100%;
+				max-height: 300px;
+			}
+
+			.title_and_author {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+			}
+
+			.author {
+				padding-block-start: 10px;
+			}
+
+			.time_and_level {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+			}
+
+			.steps_and_ingredients {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+			}
+		</style>
 	</head>
 	<body>
 		<div class="container"></div>
 		<button class="generate">GENERATE RECIPES</button>
+
 	</body>
 	<script src="script.js"></script>
 </html>

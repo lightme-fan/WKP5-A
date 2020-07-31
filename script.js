@@ -48,11 +48,71 @@ const recipes = [
 	},
 ];
 
+const container = document.querySelector('.container');
+
 const renderCard = () => {
-	// check the recipes collection
-	// generate the HTML
-	// put it in the DOM
+	recipes.forEach(recipe => {
+		const myHTML =
+			`
+			<article>
+				<div class="title" data-set="${id}">
+					<h1>${recipe.title}</h1>
+				</div>
+				<p class="recipe_image">
+					<img src="${recipe.picture}" alt="Recipe Image">
+				</p>
+				<div class="time_and_level">
+					<p class="timing">${recipe.timing}</p>
+					<p class="difficulty">${recipe.difficulty}</p>
+				</div>
+				<div class="btn">
+					<button type="button" class="button">
+						More Info
+					</button>
+				</div>
+			</article>	
+		`
+		container.insertAdjacentHTML('beforeend', myHTML);
+	});
 };
 
 const generateButton = document.querySelector('button.generate');
 generateButton.addEventListener('click', renderCard);
+
+const boody = document.querySelector('body');
+const handleMoreInfoBtn = (event) => {
+	if (event.target.matches("button.button")) {
+		const moreInfoBtn = event.target.closest('article');
+		// const id = Number(parent.dataset.id);
+		// const allRecipe = recipes.find(recipe => recipe.id === id) {
+		// openModal(allRecipe);
+		recipes.forEach(recipe => {
+			container.innerHTML =
+				`
+				<article>
+					<div class="title_and_author" data-set="${id}">
+						<h1 class="title">${recipe.title}</h1>
+						<p class="author">By ${recipe.author}</p>
+					</div>
+					<p class="recipe_image">
+						<img src="${recipe.picture}" alt="Recipe Image">
+					</p>
+					<div class="time_and_level">
+						<p class="timing">${recipe.timing}</p>
+						<p class="difficulty">${recipe.difficulty}</p>
+					</div>
+					<div class="steps_and_ingredients">
+						<p class="steps">${recipe.steps}</p>
+						<p class="ingredients">${recipe.ingredients}</p>
+					</div>
+					<div class="btn">
+						<button type="button" class="button">
+							More Info
+						</button>
+					</div>
+				</article>	
+			`
+		});
+	}
+}
+document.addEventListener('click', handleMoreInfoBtn);
