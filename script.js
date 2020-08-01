@@ -57,19 +57,19 @@ const joinSteps = Object.entries(recipes).join("\n");
 console.log(joinSteps);
 const renderCard = () => {
 	recipes.forEach(recipe => {
-		const allIngredients = recipe.steps;
-		var listOfIngredients = "";
-		allIngredients.forEach(manyIngredients);
-			const manyIngredients = (lists) => {
-				listOfIngredients += "<li>" + lists + "</li>";
-			}
+		// const allIngredients = recipe.steps;
+		// var listOfIngredients = "";
+		// allIngredients.forEach(manyIngredients);
+		// 	const manyIngredients = (lists) => {
+		// 		listOfIngredients += "<li>" + lists + "</li>";
+		// 	}
 
-		const allSteps = recipe.steps;
-		var listOfsteps = "";
-		allSteps.forEach(manySteps);
-			const manySteps = (lists) => {
-				listOfsteps += "<li>" + lists + "</li>";
-			}
+		// const allSteps = recipe.steps;
+		// var listOfsteps = "";
+		// allSteps.forEach(manySteps);
+		// 	const manySteps = (lists) => {
+		// 		listOfsteps += "<li>" + lists + "</li>";
+		// 	}
 
 		const myHTML =
 			`
@@ -231,7 +231,7 @@ const handleIngredientBtn = (event) => {
 }
 
   // A function to handle step button to add new process
-const handleStepBtn = (event) => {
+/*const handleStepBtn = (event) => {
 	const step = document.querySelector('.step');
 	const stepNum = step.children.length + 1;
 	const newStep = `
@@ -239,7 +239,7 @@ const handleStepBtn = (event) => {
 	`
 	step.insertAdjacentHTML('beforeend', newStep);
 }
-
+*/
 // handling all buttons
 const submitClickButton = (event) => {
     event.preventDefault();
@@ -247,20 +247,6 @@ const submitClickButton = (event) => {
     if (event.target.matches('form')) {
         const forms = event.target;
         const { title, picture, difficulty, timing } = forms;
-
-		// Looping
-		// const ingredient = document.querySelector('.ingredient');
-		// const ingredients = [];
-		// for(let i = 0; i < ingredient.children.length; i++) {
-		//   ingredients.push(ingredient.children[i].children[0].value);
-		//   console.log(ingredients);
-		// }
-	  
-		// const step = document.querySelector('.step');
-		// const steps = [];
-		// for (let i = 0; i < step.children.length, i++;) {
-		//   steps.push(step.children[i].children[0].value);
-		// }
 
 		const myHtml = `
 		<article> 
@@ -290,6 +276,4 @@ generateButton.addEventListener('click', renderCard);
 document.addEventListener('click', handleMoreInfoBtn);
 outerModal.addEventListener('click', removeModal);
 document.addEventListener('click', addRecipeBtn);
-document.addEventListener('click', handleIngredientBtn);
-document.addEventListener('click', handleStepBtn);
 document.addEventListener('submit', submitClickButton);
