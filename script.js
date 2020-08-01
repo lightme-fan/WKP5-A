@@ -53,11 +53,28 @@ const generateButton = document.querySelector('button.generate');
 const innerModal = document.querySelector('.modal-inner');
 const outerModal = document.querySelector('.modal-outer');
 
+const joinSteps = Object.entries(recipes).join("\n");
+console.log(joinSteps);
 const renderCard = () => {
 	recipes.forEach(recipe => {
+		const allIngredients = recipe.steps;
+		var listOfIngredients = "";
+		allIngredients.forEach(manyIngredients);
+			const manyIngredients = (lists) => {
+				listOfIngredients += "<li>" + lists + "</li>";
+			}
+
+		const allSteps = recipe.steps;
+		var listOfsteps = "";
+		allSteps.forEach(manySteps);
+			const manySteps = (lists) => {
+				listOfsteps += "<li>" + lists + "</li>";
+			}
+
 		const myHTML =
 			`
-				<article data-id="${recipe.id}"> 
+				<article data-title="${recipe.tile}" data-picture="${recipe.picture}" data-author="${recipe.author}" data-timing="${recipe.timing}" data-difficulty="${recipe.difficulty}" data-steps="${recipe.steps}" data-ingredients="${recipe.ingredients}" data-id="${recipe.id}"> 
+
 					<div class="title">
 						<h1>${recipe.title}</h1>
 					</div>
@@ -92,6 +109,7 @@ const handleMoreInfoBtn = (event) => {
 		const parent = event.target.closest('article');
 		const id = Number(parent.dataset.id);
 		const recipe = recipes.find(idRecipe => idRecipe.id === id);
+		
 
 		innerModal.innerHTML = `
 		<div class="article">
@@ -107,8 +125,8 @@ const handleMoreInfoBtn = (event) => {
 				<li class="difficulty">Difficulty: ${recipe.difficulty}</li>
 			</ul>
 			<ul class="steps_and_ingredients">
-				<li class="steps">Steps: ${recipe.steps}</li>
-				<li class="ingredients">Ingredients: ${recipe.ingredients}</li>
+				<li class="steps">Steps:<br> ${recipe.steps}</li>
+				<li class="ingredients">Ingredients:<br> ${recipe.ingredients}</li>
 			</ul>
 		</div>
 			`
@@ -126,6 +144,7 @@ const removeModal = (event) => {
 
 // Add new recipe
 const addRecipeBtn = (event) => {
+	event.preventDefault();
 	if (event.target.matches('button.add_recipe')) {
 		innerModal.innerHTML = `
         <section>
@@ -198,26 +217,72 @@ const addRecipeBtn = (event) => {
 	}
 }
 
+// Function to handle the ingredient button
+const handleIngredientBtn = (event) => {
+	if (event.target.matches('fieldset.ingredients')) {
+		const ingredient = event.target	
+		const ingrendientNumber = ingredient.children.length + 1;
+		console.log(ingrendientNumber);
+		const newIngredient = `
+		<input type="text" id="ingredient${ingrendientNumber}" name="ingredient${ingrendientNumber}">
+	`
+	ingredient.insertAdjacentHTML('beforeend', newIngredient);
+  }
+}
+
+  // A function to handle step button to add new process
+const handleStepBtn = (event) => {
+	const step = document.querySelector('.step');
+	const stepNum = step.children.length + 1;
+	const newStep = `
+	<input type="text" id="step${stepNum}" name="step${stepNum}">
+	`
+	step.insertAdjacentHTML('beforeend', newStep);
+}
+
 // handling all buttons
 const submitClickButton = (event) => {
     event.preventDefault();
     // Submit button of the form 
     if (event.target.matches('form')) {
-        const form = event.target;
-        const name = form.name.value;
-        const dish = form.dish.value;
-        const size = form.size.value;
-        const amount = form.amount.value;
+        const forms = event.target;
+        const { title, picture, difficulty, timing } = forms;
 
-        const anOrder = `
-        <div class="order">
-            <span class="title">${name}</span>
-            <button class="details">Details</button>
-            <button class="served">Delete order</button>
-        </div>
-    `;
-        orderList.insertAdjacentHTML('afterbegin', anOrder);
-        modalOuter.classList.remove('open');
+		// Looping
+		// const ingredient = document.querySelector('.ingredient');
+		// const ingredients = [];
+		// for(let i = 0; i < ingredient.children.length; i++) {
+		//   ingredients.push(ingredient.children[i].children[0].value);
+		//   console.log(ingredients);
+		// }
+	  
+		// const step = document.querySelector('.step');
+		// const steps = [];
+		// for (let i = 0; i < step.children.length, i++;) {
+		//   steps.push(step.children[i].children[0].value);
+		// }
+
+		const myHtml = `
+		<article> 
+			<div class="title">
+				<h1>${title.value}</h1>
+			</div>
+			<p class="recipe_image">
+				<img src="${picture.value}" alt="Recipe Image">
+			</p>
+			<div class="time_and_level">
+				<p class="timing">Timing: ${timing.value}</p>
+				<p class="difficulty">Difficulty: ${difficulty.value}</p>
+			</div>
+			<div class="btn">
+				<button type="button" class="moreInfo">
+					More Info
+				</button>
+			</div>
+		</article>	
+		`;
+		container.insertAdjacentHTML('beforeend', myHtml);
+		
     }
 }
 
@@ -225,3 +290,6 @@ generateButton.addEventListener('click', renderCard);
 document.addEventListener('click', handleMoreInfoBtn);
 outerModal.addEventListener('click', removeModal);
 document.addEventListener('click', addRecipeBtn);
+document.addEventListener('click', handleIngredientBtn);
+document.addEventListener('click', handleStepBtn);
+document.addEventListener('submit', submitClickButton);
