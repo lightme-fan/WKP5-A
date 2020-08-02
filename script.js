@@ -43,7 +43,7 @@ const recipes = [
 			'Boil water',
 			'Add rice in it',
 		],
-		id: 1596168522409,
+		id: 1596168522407,
 	},
 ];
 
@@ -53,28 +53,35 @@ const generateButton = document.querySelector('button.generate');
 const innerModal = document.querySelector('.modal-inner');
 const outerModal = document.querySelector('.modal-outer');
 
-const joinSteps = Object.entries(recipes).join("\n");
-console.log(joinSteps);
-const renderCard = () => {
+// Rendering the recipe cards
+const renderCard = (e) => {
+	// Looping through the recipes
 	recipes.forEach(recipe => {
-		// const allIngredients = recipe.steps;
-		// var listOfIngredients = "";
-		// allIngredients.forEach(manyIngredients);
-		// 	const manyIngredients = (lists) => {
-		// 		listOfIngredients += "<li>" + lists + "</li>";
-		// 	}
 
-		// const allSteps = recipe.steps;
-		// var listOfsteps = "";
-		// allSteps.forEach(manySteps);
-		// 	const manySteps = (lists) => {
-		// 		listOfsteps += "<li>" + lists + "</li>";
-		// 	}
+		// Looping through the ingredients
+		const getIngredients = recipe.ingredients;
+		getIngredients.forEach(ingredient => {
+			return `<p>${ingredient}</p>`;
+		});
+		
+		// Looping through the steps
+		const getSteps = recipe.steps;
+		getSteps.forEach(step => {
+			return `<p>${step}</p>`;
+		});
 
+		// Id
+		const getId = recipe.id;
+		console.log(getId);
+
+		// HTML of the recipe cards 
 		const myHTML =
 			`
-				<article data-title="${recipe.tile}" data-picture="${recipe.picture}" data-author="${recipe.author}" data-timing="${recipe.timing}" data-difficulty="${recipe.difficulty}" data-steps="${recipe.steps}" data-ingredients="${recipe.ingredients}" data-id="${recipe.id}"> 
-
+				<article 
+					data-ingredients="${recipe.ingredients}"
+					data-steps="${recipe.steps}" 
+					data-id="${recipe.id}"
+				> 
 					<div class="title">
 						<h1>${recipe.title}</h1>
 					</div>
@@ -95,26 +102,34 @@ const renderCard = () => {
 		container.insertAdjacentHTML('beforeend', myHTML);
 
 	});
+
+	// This is a button to add new recipes
 	const addRecipe = `
 		<p class="addRecipe">
 			<button class="add_recipe">Add new recipe</button>
 		</p>	
 		`;
 	container.insertAdjacentHTML("afterend", addRecipe)
+
+	// Removing the generate button
 	generateButton.classList.add('remove');
 };
 
+// A functio to handling the more info button
 const handleMoreInfoBtn = (event) => {
+	event.preventDefault();
 	if (event.target.matches('button.moreInfo')) {
 		const parent = event.target.closest('article');
 		const id = Number(parent.dataset.id);
+
+		// Distructuring the ingredients and steps
+		const { ingredients, steps } = parent.dataset;
 		const recipe = recipes.find(idRecipe => idRecipe.id === id);
 		
-
 		innerModal.innerHTML = `
 		<div class="article">
 			<div class="title_and_author">
-				<h1 class="title">${recipe.title}</h1>
+				<h2 class="title">${recipe.title}</h2>
 				<p class="author">By ${recipe.author}</p>
 			</div>
 			<p class="recipe_image">
@@ -124,10 +139,10 @@ const handleMoreInfoBtn = (event) => {
 				<li class="timing">Timing: ${recipe.timing}</li>
 				<li class="difficulty">Difficulty: ${recipe.difficulty}</li>
 			</ul>
-			<ul class="steps_and_ingredients">
-				<li class="steps">Steps:<br> ${recipe.steps}</li>
-				<li class="ingredients">Ingredients:<br> ${recipe.ingredients}</li>
-			</ul>
+			<div class="steps_and_ingredients">
+				<p class="steps">Steps:<br> ${steps}</p>
+				<p class="ingredients">Ingredients:<br> ${ingredients}</p>
+			</div>
 		</div>
 			`
 		outerModal.classList.add("open");
@@ -135,14 +150,13 @@ const handleMoreInfoBtn = (event) => {
 }
 
 const removeModal = (event) => {
-	const isOutdide = !event.target.closest('.modal-inner');
-	console.log(isOutdide);
-	if (isOutdide) {
+	const isOutside = !event.target.closest('.modal-inner');
+	if (isOutside) {
 		outerModal.classList.remove('open');
 	}
 };
 
-// Add new recipe
+// A function to show a form and add new recipes
 const addRecipeBtn = (event) => {
 	event.preventDefault();
 	if (event.target.matches('button.add_recipe')) {
@@ -188,20 +202,20 @@ const addRecipeBtn = (event) => {
 				</select>
 				</fieldset>
 
-				<fieldset>
-				<label for="ingredient">ingredients</label>
-				<div class="ingredient" id="ingredient">
-					<input type="text" id="ingredient1" name="ingredient1">
-				</div>
-				<button type="button" class="ingredients-btn">Add a new ingredient to the list</button>
+				<fieldset class="ingredients-field">
+					<label for="ingredient">ingredients</label>
+					<div class="ingredient" id="ingredient">
+						<input type="text" id="ingredient1" name="ingredient1">
+					</div>
+					<button type="button" class="ingredients-btn">Add a new ingredient to the list</button>
 				</fieldset>
 
 				<fieldset>
-				<label for="step">Steps</label>
-				<div class="step" id="step">
-					<input type="text" id="step1" name="step1">
-				</div>
-				<button type="button" class="step-btn">Add a new step to the list</button>
+					<label for="step">Steps</label>
+					<div class="step" id="step">
+						<input type="text" id="step1" name="step1">
+					</div>
+					<button type="button" class="step-btn">Add a new step to the list</button>
 				</fieldset>
 
 				<div class="submit">
@@ -217,16 +231,19 @@ const addRecipeBtn = (event) => {
 	}
 }
 
-// Function to handle the ingredient button
-const handleIngredientBtn = (event) => {
-	if (event.target.matches('fieldset.ingredients')) {
-		const ingredient = event.target	
-		const ingrendientNumber = ingredient.children.length + 1;
-		console.log(ingrendientNumber);
-		const newIngredient = `
-		<input type="text" id="ingredient${ingrendientNumber}" name="ingredient${ingrendientNumber}">
-	`
-	ingredient.insertAdjacentHTML('beforeend', newIngredient);
+// Function to handle the ingredients button
+const handleIngredientBtn = event => {
+	event.preventDefault();
+	if (event.target.matches('fieldset.ingredients-btn')) {
+		const ingredient = event.target;
+	 	const fieldset = ingredient.closest('.ingredients-field');
+	// 	const listOfIngredients = form.querySelector('.ingredient');
+	// 	const lists = listOfIngredients.children.length + 1;
+	// 	const newIngredient = `
+	// 	<input type="text" id="ingredient${lists}" name="ingredient${lists}">
+	// `
+	//listOfIngredients.insertAdjacentHTML('beforeend', newIngredient);
+	console.log(fieldset);
   }
 }
 
@@ -276,4 +293,6 @@ generateButton.addEventListener('click', renderCard);
 document.addEventListener('click', handleMoreInfoBtn);
 outerModal.addEventListener('click', removeModal);
 document.addEventListener('click', addRecipeBtn);
+window.addEventListener('click', handleIngredientBtn);
+// document.addEventListener('click', addRecipeBtn);
 document.addEventListener('submit', submitClickButton);

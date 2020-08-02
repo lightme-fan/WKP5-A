@@ -1,3 +1,7 @@
+body {
+    font-size: 20px;
+}
+
 .container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -83,11 +87,12 @@ ul {
 }
 
 .modal-inner {
-    max-width: 600px;
-    min-width: 400px;
-    padding: 2rem;
+    max-width: 400px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 10px;
+    padding-bottom: 10px;
     border-radius: 5px;
-    min-height: 200px;
     background: white;
     transform: translateY(-200%);
     transition: transform 0.2s;
@@ -103,13 +108,12 @@ fieldset {
 
 section {
 max-width: 530px;
-max-height: 530px;
 margin-inline-start: auto;
 margin-inline-end: auto;
 background-color: rgba(27, 128, 187, 0.5);
 border: 1px solid;
 border-radius: 10px;
-font-size: 1rem;
+
 }
 
 div {
