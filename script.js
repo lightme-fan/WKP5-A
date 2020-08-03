@@ -47,6 +47,7 @@ const recipes = [
 	},
 ];
 
+// Grabing all usefull elements
 const boody = document.querySelector('body');
 const container = document.querySelector('.container');
 const generateButton = document.querySelector('button.generate');
@@ -111,7 +112,7 @@ const renderCard = (e) => {
 		`;
 	container.insertAdjacentHTML("afterend", addRecipe)
 
-	// Removing the generate button
+	// Removing the generate button from the container
 	generateButton.classList.add('remove');
 };
 
@@ -149,6 +150,7 @@ const handleMoreInfoBtn = (event) => {
 	}
 }
 
+// Remove modal
 const removeModal = (event) => {
 	const isOutside = !event.target.closest('.modal-inner');
 	if (isOutside) {
@@ -165,52 +167,50 @@ const addRecipeBtn = (event) => {
 			<header>
 				<h1>Onja CookBook</h1>
 			</header>
-			<form>
+			<form data-title="tltle" data-title="picture" data-title="author" data-title="difficulty" data-title="timing" data-title="ingredients" data-title="steps">
 				<fieldset>
-				<label for="recipe-name" class="recipe-name">What is your recepe name</label>
-				<input type="text" id="recipe-name" name="recipe">
+					<label for="recipe-name" class="recipe-name">What is your recipe name</label>
+					<input type="text" id="recipe-name" name="title">
 				</fieldset>
 				
 				<fieldset>
-				<label for="picture">Picture of the result(URL)</label>
-				<input type="url" id="picture" name="picture">
+					<label for="picture">Picture of the result(URL)</label>
+					<input type="url" id="picture" name="picture">
 				</fieldset>
 				
 				<fieldset>
-				<label for="author">Who's cooking?</label>
-				<input type="text" id="author" name="author">
+					<label for="author">Who's cooking?</label>
+					<input type="text" id="author" name="author">
 				</fieldset>
 				
 				<fieldset class="level">
 				<label for="difficulty">What the difficulty?</label>
-				<!-- <input type="text" id="difficulty"> -->
-				<select name="level" id="difficulty">
-					<option value="easy">Easy</option>
-					<option value="medium">Medium</option>
-					<option value="difficult">Difficult</option>
-				</select>
+					<select name="difficulty" id="difficulty">
+						<option value="easy">Easy</option>
+						<option value="medium">Medium</option>
+						<option value="difficult">Difficult</option>
+					</select>
 				</fieldset>
 
 				<fieldset class="time">
-				<label for="timing">How much does it take?</label>
-				<!-- <input type="text" id="timing"> -->
-				<select name="time" id="timing">
-					<option value="15"> Around 15min</option>
-					<option value="30">Around 30min</option>
-					<option value="45">Around 45min</option>
-					<option value="60">Around 1h</option>
-				</select>
+					<label for="timing">How much does it take?</label>
+					<select name="timing" id="timing">
+						<option value="15"> Around 15min</option>
+						<option value="30">Around 30min</option>
+						<option value="45">Around 45min</option>
+						<option value="60">Around 1h</option>
+					</select>
 				</fieldset>
 
-				<fieldset class="ingredients-field">
+				<fieldset class="ingredient-field">
 					<label for="ingredient">ingredients</label>
 					<div class="ingredient" id="ingredient">
-						<input type="text" id="ingredient1" name="ingredient1">
+						<input type="text" id="ingredient1"  name="ingredient1">
 					</div>
-					<button type="button" class="ingredients-btn">Add a new ingredient to the list</button>
+					<button type="button" class="ingredient-btn">Add a new ingredient to the list</button>
 				</fieldset>
 
-				<fieldset>
+				<fieldset class="step-field">
 					<label for="step">Steps</label>
 					<div class="step" id="step">
 						<input type="text" id="step1" name="step1">
@@ -219,80 +219,101 @@ const addRecipeBtn = (event) => {
 				</fieldset>
 
 				<div class="submit">
-				<button type="submit" class="submit-btn">Submit</button>
+					<button type="submit" class="submit-btn">Submit</button>
 				</div>
 			</form>
 
 		</section>
-
 
     `;
     outerModal.classList.add("open");
 	}
 }
 
-// Function to handle the ingredients button
+// Function to handle the ingredients button to add new input steps
 const handleIngredientBtn = event => {
 	event.preventDefault();
-	if (event.target.matches('fieldset.ingredients-btn')) {
+	if (event.target.matches('fieldset.ingredient-btn')) {
 		const ingredient = event.target;
-	 	const fieldset = ingredient.closest('.ingredients-field');
-	// 	const listOfIngredients = form.querySelector('.ingredient');
-	// 	const lists = listOfIngredients.children.length + 1;
-	// 	const newIngredient = `
-	// 	<input type="text" id="ingredient${lists}" name="ingredient${lists}">
-	// `
-	//listOfIngredients.insertAdjacentHTML('beforeend', newIngredient);
+	 	const fieldset = ingredient.closest('.ingredient-field');
+		const listOfIngredients = form.querySelector('.ingredient');
+		const lists = listOfIngredients.children.length + 1;
+		const newInputIngredient = `
+		<input type="text" id="ingredient${lists}" name="ingredient${lists}">
+	`
+	listOfIngredients.insertAdjacentHTML('beforeend', newInputIngredient);
 	console.log(fieldset);
   }
 }
 
-  // A function to handle step button to add new process
-/*const handleStepBtn = (event) => {
-	const step = document.querySelector('.step');
-	const stepNum = step.children.length + 1;
-	const newStep = `
-	<input type="text" id="step${stepNum}" name="step${stepNum}">
+  // A function to handle step button to add new input steps
+const handleStepBtn = (event) => {
+	event.preventDefault();
+	if (event.target.matches('fieldset.step-btn')) {
+		const steps = event.target;
+	 	const fieldset = ingredient.closest('.step-field');
+		const listOfSteps = steps.querySelector('.steps');
+		const lists = listOfSteps.children.length + 1;
+		const newInputStep = `
+		<input type="text" id="ingredient${lists}" name="ingredient${lists}">
 	`
-	step.insertAdjacentHTML('beforeend', newStep);
+	listOfSteps.insertAdjacentHTML('beforeend', newInputStep);
+	console.log(fieldset);
+  }
 }
-*/
-// handling all buttons
+
+// handling submit buttons
 const submitClickButton = (event) => {
     event.preventDefault();
-    // Submit button of the form 
-    if (event.target.matches('form')) {
-        const forms = event.target;
-        const { title, picture, difficulty, timing } = forms;
-
-		const myHtml = `
-		<article> 
-			<div class="title">
-				<h1>${title.value}</h1>
-			</div>
-			<p class="recipe_image">
-				<img src="${picture.value}" alt="Recipe Image">
-			</p>
-			<div class="time_and_level">
-				<p class="timing">Timing: ${timing.value}</p>
-				<p class="difficulty">Difficulty: ${difficulty.value}</p>
-			</div>
-			<div class="btn">
-				<button type="button" class="moreInfo">
-					More Info
-				</button>
-			</div>
-		</article>	
-		`;
-		container.insertAdjacentHTML('beforeend', myHtml);
+	if (event.target.matches('button.submit-btn')) {
+		const forms = event.target.closest('form');
+		const { title, picture, timing, difficulty } = forms.dataset;
+		const myHTML =
+			`
+				<article 
+					data-ingredients="${ingredients}"
+					data-steps="${steps}" 
+					data-id="${id}"
+				> 
+					<div class="title">
+						<h1>${title.value}</h1>
+					</div>
+					<p class="recipe_image">
+						<img src="${picture.value}" alt="Recipe Image">
+					</p>
+					<div class="time_and_level">
+						<p class="timing">Timing: ${timing.value}</p>
+						<p class="difficulty">Difficulty: ${difficulty.value}</p>
+					</div>
+					<div class="btn">
+						<button type="button" class="moreInfo">
+							More Info
+						</button>
+					</div>
+				</article>	
+		`
+		container.insertAdjacentHTML('beforeend', myHTML);
+	}
 		
-    }
 }
 
+// Add event listner for the generate button
 generateButton.addEventListener('click', renderCard);
+
+// Add event listner for more Information
 document.addEventListener('click', handleMoreInfoBtn);
+
+// Add event listner for removing modal
 outerModal.addEventListener('click', removeModal);
+
+// Add event listner to add new recipes
 document.addEventListener('click', addRecipeBtn);
+
+// Add event listner to add more inputs when click ingredient button
 window.addEventListener('click', handleIngredientBtn);
-// document.addEventListener('click', addRecipeBtn);
-document.addEventListener('submit', submitClickButton);
+
+// Add event listner to add more inputs when click step button
+document.addEventListener('click', addRecipeBtn);
+
+// Add event listner to show the new recipe to the container when submit the form
+window.addEventListener('submit', submitClickButton);
