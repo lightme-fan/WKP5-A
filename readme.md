@@ -19,8 +19,11 @@
 
 ## The steps I haven't got made
 
-### 1- I haven't finished the ingredient and step buttons worked to add new inputs yet
+### 1- I am still not sure if the loop of ingrendient and steps work in the way we expect.
 
-### 2- Also I haven't done the submit form yet.
+### 2- I haven't finished the ingredient and step buttons worked to add new inputs yet
 
-If I had more time, I would have got the **ingredient, step and submit buttons** 
+### 3- Also I haven't done the submit form yet.
+
+If I had more time, I would have got the **ingredient, step and submit buttons** .
+

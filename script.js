@@ -36,10 +36,10 @@ const recipes = [
 		picture: 'https://bit.ly/31emq6u',
 		author: 'Peta',
 		difficulty: 'Medium',
-		timing: '15',
-		ingredients: ['eggs', 'salt', 'water'],
+		timing: '30',
+		ingredients: ['water', 'rice'],
 		steps: [
-			'Put a pan on the fire',
+			'Put a pot on the fire',
 			'Boil water',
 			'Add rice in it',
 		],
